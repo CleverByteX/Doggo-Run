@@ -53,22 +53,30 @@ function jump() {
 function spawnCactus() {
   if (isGameOver) return;
   
-  const cactus = document.createElement('div');
-  cactus.className = 'cactus';
-  cactus.style.left = '110vw'; // Start further to the right
+  // Determine how many cacti can be on screen.
+  // For example: on easy mode (difficultyLevel < 1.5) only allow 1 cactus.
+  // As difficulty increases, allow more (e.g., Math.floor(difficultyLevel)).
+  let maxActive = difficultyLevel < 1.5 ? 1 : Math.floor(difficultyLevel);
+  const activeCacti = document.querySelectorAll('.cactus').length;
   
-  // Adjust animation duration based on difficulty level.
-  // Base duration is 4 seconds; higher difficulty means shorter duration.
-  let baseDuration = 4; // seconds
-  let animationDuration = baseDuration / difficultyLevel;
-  cactus.style.animation = `moveCactus ${animationDuration}s linear forwards`;
-  
-  gameContainer.appendChild(cactus);
-  
-  // Remove cactus after its animation ends
-  cactus.addEventListener('animationend', () => {
-    cactus.remove();
-  });
+  if (activeCacti < maxActive) {
+    const cactus = document.createElement('div');
+    cactus.className = 'cactus';
+    cactus.style.left = '110vw'; // Start further to the right
+    
+    // Adjust animation duration based on difficulty level.
+    // Base duration is 4 seconds; higher difficulty means shorter duration.
+    let baseDuration = 4; // seconds
+    let animationDuration = baseDuration / difficultyLevel;
+    cactus.style.animation = `moveCactus ${animationDuration}s linear forwards`;
+    
+    gameContainer.appendChild(cactus);
+    
+    // Remove cactus after its animation ends
+    cactus.addEventListener('animationend', () => {
+      cactus.remove();
+    });
+  }
   
   // The delay before spawning the next cactus decreases as difficulty increases.
   let spawnDelay = (Math.random() * 2000 + 1000) / difficultyLevel;
@@ -127,9 +135,9 @@ function updateScore() {
   score++;
   scoreElement.textContent = 'Score: ' + score;
   
-  // Only start increasing difficulty once score exceeds 500.
-  if (score > 500 && score % 200 === 0) {
-    difficultyLevel += 0.1;  // Increase difficulty gradually after 500 points
+  // Start increasing difficulty after 300 instead of 500
+  if (score > 300 && score % 200 === 0) {
+    difficultyLevel += 0.5; // Increased difficulty increment to 0.5
     console.log("Difficulty increased to", difficultyLevel);
   }
   
