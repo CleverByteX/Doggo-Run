@@ -32,5 +32,36 @@ restartButton.addEventListener('click', () => {
   startGame();
 });
 
+const gameContainer = document.getElementById('game-container');
+
+function spawnCactus() {
+  if (isGameOver) return;
+
+  const cactus = document.createElement('div');
+  cactus.className = 'cactus';
+  cactus.style.left = '100vw'; // Start at the right edge of the screen
+  gameContainer.appendChild(cactus);
+
+  // Remove cactus after animation ends
+  cactus.addEventListener('animationend', () => {
+    cactus.remove();
+  });
+
+  // Spawn the next cactus after a random delay
+  setTimeout(spawnCactus, Math.random() * 2000 + 1000); // Random delay between 1-3 seconds
+}
+
 // Start the game
-startGame();
+function startGame() {
+  isGameOver = false;
+  spawnCactus(); // Start spawning cacti
+  updateScore(); // Start updating the score
+}
+
+// Start the game on page load
+window.addEventListener('load', () => {
+  console.log("Game started"); // Debugging log
+  startGame();
+});
+
+<script src="script.mobile.js"></script>

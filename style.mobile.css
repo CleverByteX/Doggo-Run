@@ -30,8 +30,8 @@ body {
   position: absolute;
   bottom: 12vh; /* Align with the cactus */
   left: 20vw; /* Center the dog horizontally */
-  width: 12vw; /* Increase size for better visibility */
-  height: 12vw; /* Maintain a square aspect ratio */
+  width: 15vw; /* Increase size for better visibility */
+  height: 15vw; /* Maintain a square aspect ratio */
   background: url('./assets/dog.gif') no-repeat;
   background-size: contain;
   background-position: center;
@@ -41,8 +41,8 @@ body {
 .cactus {
   position: absolute;
   bottom: 12vh; /* Align with the dog */
-  width: 8vw; /* Adjust size for better visibility */
-  height: 16vw; /* Maintain a rectangular aspect ratio */
+  width: 10vw; /* Adjust size for better visibility */
+  height: 20vw; /* Maintain a rectangular aspect ratio */
   background: url('./assets/cactus.png') no-repeat;
   background-size: contain;
   background-position: center;
