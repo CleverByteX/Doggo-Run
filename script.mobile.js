@@ -64,10 +64,38 @@ function spawnCactus() {
   setTimeout(spawnCactus, Math.random() * 2000 + 1000);
 }
 
-// Dummy updateScore function
+// --- NEW --- Collision detection function
+function checkCollision() {
+  const dogRect = dog.getBoundingClientRect();
+  document.querySelectorAll('.cactus').forEach(cactus => {
+    const cactusRect = cactus.getBoundingClientRect();
+    if (
+      dogRect.left < cactusRect.right &&
+      dogRect.right > cactusRect.left &&
+      dogRect.top < cactusRect.bottom &&
+      dogRect.bottom > cactusRect.top
+    ) {
+      gameOver();
+    }
+  });
+  if (!isGameOver) {
+    requestAnimationFrame(checkCollision);
+  }
+}
+
+// --- NEW --- Score updating function
 function updateScore() {
-  // Your score update logic here...
-  // (For debugging, you might want to log or update the DOM)
+  if (isGameOver) return;
+  score++;
+  scoreElement.textContent = 'Score: ' + score;
+  setTimeout(updateScore, 100); // Update score every 100ms
+}
+
+// --- NEW --- Game Over function
+function gameOver() {
+  isGameOver = true;
+  gameOverElement.style.display = 'block';
+  // (You can optionally add additional game-over handling here)
 }
 
 // Start the game
@@ -98,8 +126,10 @@ restartButton.addEventListener('click', () => {
   startGame();
 });
 
-// Start the game on page load
+// Start collision detection and score update once the game starts
 window.addEventListener('load', () => {
   console.log("Mobile game started");
   startGame();
+  requestAnimationFrame(checkCollision);
+  updateScore();
 });

@@ -35,7 +35,7 @@ body {
   background: url('./assets/dog.gif') no-repeat;
   background-size: contain;
   background-position: center;
-  z-index: 10;
+  z-index: 20; /* Raise dog's layer so it appears above the cactus */
 }
 
 .cactus {
@@ -46,7 +46,8 @@ body {
   background: url('./assets/cactus.png') no-repeat;
   background-size: contain;
   background-position: center;
-  animation: moveCactus 3s linear forwards;
+  /* Force the proper animation direction and forward-fill so it moves leftwards */
+  animation: moveCactus 3s linear normal forwards;
   z-index: 10;
 }
 
