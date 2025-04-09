@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url('./assets/desert.png') repeat-x;
+  background-size: cover;
+  animation: scrollBackground 3s linear infinite; /* Increased speed for full-screen mode */
+}
+
+@keyframes scrollBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -100% 0; /* Ajusta para que el bucle sea más natural */
+  }
+}
+
+#dog {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  width: 80px;
+  height: 80px;
+  background: url('./assets/dog.gif') no-repeat;
+  background-size: contain;
+}
+
+.cactus {
+  position: absolute;
+  bottom: 50px;
+  width: 50px;
+  height: 80px;
+  background: url('./assets/cactus.png') no-repeat;
+  background-size: contain;
+  animation: moveCactus 3s linear infinite;
+}
+
+@keyframes moveCactus {
+  from {
+    left: 100vw;
+  }
+  to {
+    left: -50px;
+  }
+}
+
+#score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  color: white;
+}
+
+#game-over {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 32px;
+}
+
+#restart-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
