@@ -1,4 +1,4 @@
-# Endless Runner Game
+# Doggo Run!
 
 A simple 2D endless runner game built with HTML, CSS, and JavaScript. The player controls a running dog that jumps over cacti to survive as long as possible.
 
