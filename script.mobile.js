@@ -19,31 +19,33 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Simple jump function (adjust as needed)
+// Updated jump function: slower and higher jump
 function jump() {
   if (isJumping) return;
   isJumping = true;
   let jumpHeight = 0;
-  // Jump up for 200ms then fall down (using setInterval for simplicity)
+  const maxJump = 30;          // Increase maximum jump height (in vh)
+  const jumpIncrement = 1;     // Smaller increment for a smoother, slower jump
+  const intervalTime = 20;     // Interval time in ms
+
   const jumpInterval = setInterval(() => {
-    // Increase height until a max delta (e.g. 20 vh)
-    if (jumpHeight >= 20) {
+    if (jumpHeight >= maxJump) {
       clearInterval(jumpInterval);
-      // Start falling down
+      // Begin falling
       const fallInterval = setInterval(() => {
         if (jumpHeight <= 0) {
           clearInterval(fallInterval);
           isJumping = false;
           jumpHeight = 0;
         }
-        jumpHeight -= 2;
+        jumpHeight -= jumpIncrement;
         dog.style.bottom = `${dogBottom + jumpHeight}vh`;
-      }, 20);
+      }, intervalTime);
     } else {
-      jumpHeight += 2;
+      jumpHeight += jumpIncrement;
       dog.style.bottom = `${dogBottom + jumpHeight}vh`;
     }
-  }, 20);
+  }, intervalTime);
 }
 
 // Define cactus spawning
@@ -52,7 +54,7 @@ function spawnCactus() {
   
   const cactus = document.createElement('div');
   cactus.className = 'cactus';
-  cactus.style.left = '100vw'; // start off-screen
+  cactus.style.left = '110vw'; // Start further to the right
   gameContainer.appendChild(cactus);
   
   // Remove cactus after its animation ends
@@ -67,9 +69,9 @@ function spawnCactus() {
 // Collision detection function – check all cacti and stop game on first collision
 function checkCollision() {
   const dogRect = dog.getBoundingClientRect();
-  // Adjust dog's collision box with an inset margin (20% of width/height)
-  const marginX = dogRect.width * 0.2;
-  const marginY = dogRect.height * 0.2;
+  // Increase collision margin to 40% to make the collision box smaller
+  const marginX = dogRect.width * 0.4;
+  const marginY = dogRect.height * 0.4;
   const adjustedDogRect = {
     left: dogRect.left + marginX,
     right: dogRect.right - marginX,

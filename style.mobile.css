@@ -28,14 +28,14 @@ body {
 
 #dog {
   position: absolute;
-  bottom: 10vh; /* Adjusted from 12vh to 10vh for visual alignment */
+  bottom: 12vh; /* now matching your JS base dogBottom */
   left: 20vw;
   width: 15vw;
   height: 15vw;
   background: url('./assets/dog.gif') no-repeat;
   background-size: contain;
   background-position: center;
-  z-index: 10; /* Set lower than cactus if you want cactus drawn on top */
+  z-index: 10;
 }
 
 .cactus {
@@ -52,7 +52,7 @@ body {
 
 @keyframes moveCactus {
   from {
-    left: 100vw;
+    left: 110vw;
   }
   to {
     left: -10vw;
