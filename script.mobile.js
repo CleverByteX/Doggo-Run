@@ -64,26 +64,53 @@ function spawnCactus() {
   setTimeout(spawnCactus, Math.random() * 2000 + 1000);
 }
 
-// --- NEW --- Collision detection function
+// Collision detection function – check all cacti and stop game on first collision
 function checkCollision() {
   const dogRect = dog.getBoundingClientRect();
-  document.querySelectorAll('.cactus').forEach(cactus => {
+  // Adjust dog's collision box with an inset margin (20% of width/height)
+  const marginX = dogRect.width * 0.2;
+  const marginY = dogRect.height * 0.2;
+  const adjustedDogRect = {
+    left: dogRect.left + marginX,
+    right: dogRect.right - marginX,
+    top: dogRect.top + marginY,
+    bottom: dogRect.bottom - marginY
+  };
+
+  const cacti = document.querySelectorAll('.cactus');
+  for (const cactus of cacti) {
     const cactusRect = cactus.getBoundingClientRect();
     if (
-      dogRect.left < cactusRect.right &&
-      dogRect.right > cactusRect.left &&
-      dogRect.top < cactusRect.bottom &&
-      dogRect.bottom > cactusRect.top
+      adjustedDogRect.left < cactusRect.right &&
+      adjustedDogRect.right > cactusRect.left &&
+      adjustedDogRect.top < cactusRect.bottom &&
+      adjustedDogRect.bottom > cactusRect.top
     ) {
       gameOver();
+      return; // Exit once a collision is detected
     }
-  });
+  }
   if (!isGameOver) {
     requestAnimationFrame(checkCollision);
   }
 }
 
-// --- NEW --- Score updating function
+// Updated game over function: stop game loops and reset spawning
+function gameOver() {
+  isGameOver = true;
+  gameOverElement.style.display = 'block';
+  
+  // Stop background animation by clearing its inline style
+  gameContainer.style.animation = 'none';
+  
+  // Remove all existing cacti to stop further collisions
+  document.querySelectorAll('.cactus').forEach(cactus => cactus.remove());
+  
+  // Optionally, cancel any pending timeouts/intervals if you stored them
+  console.log("Game Over!");
+}
+
+// Score updating function
 function updateScore() {
   if (isGameOver) return;
   score++;
@@ -91,17 +118,11 @@ function updateScore() {
   setTimeout(updateScore, 100); // Update score every 100ms
 }
 
-// --- NEW --- Game Over function
-function gameOver() {
-  isGameOver = true;
-  gameOverElement.style.display = 'block';
-  // (You can optionally add additional game-over handling here)
-}
-
 // Start the game
 function startGame() {
   isGameOver = false;
   spawnCactus();
+  requestAnimationFrame(checkCollision); // Start collision detection loop
   updateScore();
 }
 

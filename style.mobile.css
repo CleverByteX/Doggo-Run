@@ -28,27 +28,26 @@ body {
 
 #dog {
   position: absolute;
-  bottom: 12vh; /* Base level is 12vh */
+  bottom: 10vh; /* Adjusted from 12vh to 10vh for visual alignment */
   left: 20vw;
   width: 15vw;
   height: 15vw;
   background: url('./assets/dog.gif') no-repeat;
   background-size: contain;
   background-position: center;
-  z-index: 20; /* Raise dog's layer so it appears above the cactus */
+  z-index: 10; /* Set lower than cactus if you want cactus drawn on top */
 }
 
 .cactus {
   position: absolute;
-  bottom: 12vh; /* Ensure alignment with the dog */
+  bottom: 10vh; /* Ensure same bottom level as the dog */
   width: 10vw;
   height: 20vw;
   background: url('./assets/cactus.png') no-repeat;
   background-size: contain;
   background-position: center;
-  /* Force the proper animation direction and forward-fill so it moves leftwards */
-  animation: moveCactus 3s linear normal forwards;
-  z-index: 10;
+  animation: moveCactus 3s linear forwards;
+  z-index: 20; /* Now cactus shows on top */
 }
 
 @keyframes moveCactus {
