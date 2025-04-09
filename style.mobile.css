@@ -46,8 +46,9 @@ body {
   background: url('./assets/cactus.png') no-repeat;
   background-size: contain;
   background-position: center;
-  animation: moveCactus 3s linear forwards;
-  z-index: 20; /* Now cactus shows on top */
+  /* Change duration from 3s to 4s */
+  animation: moveCactus 4s linear forwards;
+  z-index: 20;
 }
 
 @keyframes moveCactus {

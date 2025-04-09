@@ -2,6 +2,7 @@
 let isGameOver = false;
 let isJumping = false;
 let score = 0;
+let difficultyLevel = 1;
 const dog = document.getElementById('dog');
 const gameContainer = document.getElementById('game-container');
 const scoreElement = document.getElementById('score');
@@ -55,6 +56,13 @@ function spawnCactus() {
   const cactus = document.createElement('div');
   cactus.className = 'cactus';
   cactus.style.left = '110vw'; // Start further to the right
+  
+  // Adjust animation duration based on difficulty level.
+  // Base duration is 4 seconds; higher difficulty means shorter duration.
+  let baseDuration = 4; // seconds
+  let animationDuration = baseDuration / difficultyLevel;
+  cactus.style.animation = `moveCactus ${animationDuration}s linear forwards`;
+  
   gameContainer.appendChild(cactus);
   
   // Remove cactus after its animation ends
@@ -62,8 +70,9 @@ function spawnCactus() {
     cactus.remove();
   });
   
-  // Spawn the next cactus after a random delay (between 1-3 seconds)
-  setTimeout(spawnCactus, Math.random() * 2000 + 1000);
+  // The delay before spawning the next cactus decreases as difficulty increases.
+  let spawnDelay = (Math.random() * 2000 + 1000) / difficultyLevel;
+  setTimeout(spawnCactus, spawnDelay);
 }
 
 // Collision detection function – check all cacti and stop game on first collision
@@ -117,6 +126,13 @@ function updateScore() {
   if (isGameOver) return;
   score++;
   scoreElement.textContent = 'Score: ' + score;
+  
+  // Only start increasing difficulty once score exceeds 500.
+  if (score > 500 && score % 200 === 0) {
+    difficultyLevel += 0.1;  // Increase difficulty gradually after 500 points
+    console.log("Difficulty increased to", difficultyLevel);
+  }
+  
   setTimeout(updateScore, 100); // Update score every 100ms
 }
 
