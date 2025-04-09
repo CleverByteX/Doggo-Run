@@ -1,0 +1,86 @@
+* {
+  image-rendering: pixelated;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url('./assets/desert.png') repeat-x;
+  background-size: 800px 100%; /* Match the image width exactly */
+  animation: scrollBackground 3s linear infinite; /* Smooth background movement */
+}
+
+@keyframes scrollBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -800px 0;
+  }
+}
+
+#dog {
+  position: absolute;
+  bottom: 10vh; /* Position the dog slightly above the bottom */
+  left: 20vw; /* Center the dog horizontally */
+  width: 8vw; /* Set width relative to viewport */
+  height: 8vw; /* Maintain a square aspect ratio */
+  background: url('./assets/dog.gif') no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 10; /* Ensure the dog is on top */
+}
+
+.cactus {
+  position: absolute;
+  bottom: 10vh; /* Position the cactus slightly above the bottom */
+  width: 5vw; /* Set width relative to viewport */
+  height: 10vw; /* Maintain a rectangular aspect ratio */
+  background: url('./assets/cactus.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+  animation: moveCactus 3s linear forwards; /* Ensure the animation is applied */
+  z-index: 10; /* Ensure the cactus is on top */
+}
+
+@keyframes moveCactus {
+  from {
+    left: 100vw; /* Start off-screen to the right */
+  }
+  to {
+    left: -10vw; /* Move off-screen to the left */
+  }
+}
+
+#score {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-size: 5vw; /* Use viewport width for font size */
+  color: white;
+}
+
+#game-over {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 6vw; /* Use viewport width for font size */
+}
+
+#restart-button {
+  margin-top: 20px;
+  padding: 2vw 4vw; /* Use viewport width for padding */
+  font-size: 4vw; /* Use viewport width for font size */
+  cursor: pointer;
+}

@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Doggo Run!</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- Load desktop styles for larger screens -->
+  <link rel="stylesheet" href="style.css" media="(min-width: 768px)">
+  <!-- Load mobile styles for smaller screens -->
+  <link rel="stylesheet" href="style.mobile.css" media="(max-width: 767px)">
 </head>
 <body>
   <div id="game-container">
@@ -15,6 +18,11 @@
       <button id="restart-button">Restart</button>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script>
+    // Dynamically load the correct JavaScript file based on screen size
+    const script = document.createElement('script');
+    script.src = window.innerWidth < 768 ? 'script.mobile.js' : 'script.js';
+    document.body.appendChild(script);
+  </script>
 </body>
 </html>
